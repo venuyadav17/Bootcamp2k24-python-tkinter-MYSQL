@@ -1,3 +1,3 @@
  # daily python practice
 
- description
+day wise python practice file
