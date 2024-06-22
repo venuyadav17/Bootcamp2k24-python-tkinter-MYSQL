@@ -76,24 +76,26 @@ update customers set age = 20 where customerID = 225;
 
 -- DCL (Data Control Language) is used to control access to data in the database.
 
+-- Grant SELECT, INSERT, UPDATE on all tables to a user 'employee'
+GRANT SELECT, INSERT, UPDATE ON *.* TO 'employee'@'localhost';
 
--- Grant a user permissions
-GRANT SELECT, INSERT, UPDATE ON School.Students TO 'user1'@'localhost';
+-- Grant all privileges on the 'ecommerce' database to a user 'admin'
+GRANT ALL PRIVILEGES ON ecommerce.* TO 'admin'@'localhost';
 
--- Revoke a user's permissions
-REVOKE INSERT, UPDATE ON School.Students FROM 'user1'@'localhost';
+-- Grant SELECT permission on 'Products' table to a user 'customer'
+GRANT SELECT ON ecommerce.Products TO 'customer'@'localhost';
 
--- Create a user
-CREATE USER 'user1'@'localhost' IDENTIFIED BY 'password';
 
--- Drop a user
-DROP USER 'user1'@'localhost';
+-- Revoke INSERT, UPDATE on all tables from a user 'employee'
+REVOKE INSERT, UPDATE ON *.* FROM 'employee'@'localhost';
 
--- Grant all privileges on the database to a user
-GRANT ALL PRIVILEGES ON School.* TO 'user1'@'localhost';
+-- Revoke all privileges on the 'ecommerce' database from a user 'admin'
+REVOKE ALL PRIVILEGES ON ecommerce.* FROM 'admin'@'localhost';
 
--- Show privileges granted to a user
-SHOW GRANTS FOR 'user1'@'localhost';
+-- Revoke SELECT permission on 'Products' table from a user 'customer'
+REVOKE SELECT ON ecommerce.Products FROM 'customer'@'localhost';
+
+
 
 -- DQL (Data Query Language) is used to fetch data from the database.
 -- Select all records from the Students table
@@ -112,6 +114,40 @@ SELECT * FROM Students ORDER BY Name ASC;
 SELECT Age, COUNT(*) AS NumberOfStudents FROM Students GROUP BY Age;
 
 
+-- Transaction Control Language (TCL)
+
+-- Start a transaction
+START TRANSACTION;
+
+-- Insert a new product
+INSERT INTO Products (product_name, price, stock) VALUES ('Laptop', 1200.00, 50);
+
+-- Update stock for an existing product
+UPDATE Products SET stock = stock - 1 WHERE product_id = 10;
+
+-- Commit the transaction if all operations are successful
+COMMIT;
+
+-- If an error occurs, rollback the transaction
+ROLLBACK;
+
+-- Start a transaction
+START TRANSACTION;
+
+-- Insert a new product
+INSERT INTO Products (product_name, price, stock) VALUES ('Smartphone', 800.00, 100);
+
+-- Set a savepoint
+SAVEPOINT before_update;
+
+-- Update stock for an existing product
+UPDATE Products SET stock = stock - 5 WHERE product_id = 20;
+
+-- If an error occurs, rollback to the savepoint
+ROLLBACK TO before_update;
+
+-- Commit the transaction if all operations are successful
+COMMIT;
 
 
 
