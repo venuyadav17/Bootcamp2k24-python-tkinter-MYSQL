@@ -1,0 +1,31 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load an example dataset
+data = sns.load_dataset('tips')
+
+# Set the aesthetic style of the plots
+sns.set_style('whitegrid')
+
+# Create a figure with multiple subplots
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Scatter plot with regression line
+sns.regplot(x='total_bill', y='tip', data=data, ax=axes[0, 0])
+axes[0, 0].set_title('Scatter Plot with Regression Line')
+
+# Box plot
+sns.boxplot(x='day', y='total_bill', data=data, ax=axes[0, 1])
+axes[0, 1].set_title('Box Plot by Day')
+
+# Violin plot
+sns.violinplot(x='day', y='total_bill', hue='sex', data=data, split=True, ax=axes[1, 0])
+axes[1, 0].set_title('Violin Plot by Day and Sex')
+
+# Pair plot
+sns.pairplot(data, hue='sex')
+plt.suptitle('Pair Plot', y=1.02)
+
+# Adjust the spacing between plots
+plt.tight_layout()
+plt.show()
